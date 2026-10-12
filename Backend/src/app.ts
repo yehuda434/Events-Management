@@ -10,6 +10,19 @@ const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
+// Root Welcome Route
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    message: '🚀 Event Management RESTful API is running successfully on Vercel!',
+    status: 'online',
+    endpoints: {
+      health: '/api/health',
+      eventTypes: '/api/event-types',
+      events: '/api/events',
+    },
+  });
+});
+
 // Health Check
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
