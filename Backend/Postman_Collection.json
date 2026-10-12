@@ -1,0 +1,217 @@
+{
+  "info": {
+    "_postman_id": "b3e9a174-8b6f-42e1-8a9d-events-collection",
+    "name": "Events Management API (John Bryce)",
+    "description": "Postman Collection for Event Management REST API with TypeScript, Node.js and Neon PostgreSQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Event Types",
+      "item": [
+        {
+          "name": "Get All Event Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/event-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "event-types"]
+            },
+            "description": "החזרת כל סוגי האירועים הקיימים במסד הנתונים"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Events",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            },
+            "description": "החזרת כל האירועים הקיימים"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Events by Type ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/by-type/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", "by-type", "1"]
+            },
+            "description": "החזרת כל האירועים מסוג מסוים לפי קוד סוג אירוע"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", "1"]
+            },
+            "description": "החזרת אירוע ספציפי לפי קוד אירוע"
+          },
+          "response": []
+        },
+        {
+          "name": "Add New Event (Success)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type_id\": 1,\n  \"start_date_time\": \"2026-12-15T19:30:00.000Z\",\n  \"description\": \"חתונת השנה של דני ומיכל באולם מפואר\",\n  \"address\": \"אולמי גני כנען, נס ציונה\",\n  \"confirmed_attendees\": 350\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            },
+            "description": "הוספת אירוע חדש בעתיד עם וולידציה מלאה"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Event (Success)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type_id\": 1,\n  \"start_date_time\": \"2026-12-15T20:00:00.000Z\",\n  \"description\": \"חתונת השנה של דני ומיכל (שעה עודכנה ל-20:00)\",\n  \"address\": \"אולמי גני כנען, נס ציונה\",\n  \"confirmed_attendees\": 380\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", "1"]
+            },
+            "description": "עדכון אירוע קיים"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Event (Success)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", "1"]
+            },
+            "description": "מחיקת אירוע קיים לפי קוד אירוע"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Validations & Negative Tests",
+      "item": [
+        {
+          "name": "Validation Fail - Add Event in Past",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type_id\": 1,\n  \"start_date_time\": \"2020-01-01T10:00:00.000Z\",\n  \"description\": \"אירוע בעבר שאמור להיכשל\",\n  \"address\": \"תל אביב\",\n  \"confirmed_attendees\": 50\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            },
+            "description": "בדיקת שגיאה: ניסיון להוסיף אירוע שזמנו בעבר (אמור להחזיר 400 Bad Request)"
+          },
+          "response": []
+        },
+        {
+          "name": "Validation Fail - Attendees > 1000",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type_id\": 2,\n  \"start_date_time\": \"2026-12-30T10:00:00.000Z\",\n  \"description\": \"כנס ענק עם מעל 1000 איש\",\n  \"address\": \"מרכז הקונגרסים\",\n  \"confirmed_attendees\": 1500\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            },
+            "description": "בדיקת שגיאה: מספר מאשרי הגעה מעל 1000 (אמור להחזיר 400 Bad Request)"
+          },
+          "response": []
+        },
+        {
+          "name": "Validation Fail - Missing Required Field",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type_id\": 2,\n  \"description\": \"חסר תאריך וכתובת\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            },
+            "description": "בדיקת שגיאה: חוסר בשדות חובה (אמור להחזיר 400 Bad Request)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    }
+  ]
+}
