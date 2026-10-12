@@ -79,6 +79,20 @@ events-system/
    ```
 3. פתח את הדפדפן בכתובת: `http://localhost:3000`
 
+### 5. הרצה באמצעות Docker (Docker & Docker Compose)
+הפרויקט נבנה וארוז כ-Docker Images הזמינים ב-Docker Hub:
+* **Backend Image:** `yehuda434/events-backend:latest`
+* **Frontend Image:** `yehuda434/events-frontend:latest`
+
+#### הרצה מהירה באמצעות Docker Compose:
+```bash
+# הרצת שרתי ה-Backend וה-Frontend יחד:
+docker compose up -d
+```
+האפליקציה תהיה זמינה ב:
+* **Frontend:** `http://localhost:3000`
+* **Backend:** `http://localhost:4000/api`
+
 ---
 
 ## 📦 הוראות הגשה (יצירת קובץ ZIP)
